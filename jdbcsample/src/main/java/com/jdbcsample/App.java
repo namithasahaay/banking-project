@@ -16,26 +16,20 @@ public class App
   	String url="jdbc:mysql://localhost:3306/iphone";
   	String username="root";
   	String password="namitha@100";
+  	// get connection to the database
   	
-  	//get connection to the database
-  	Connection con=DriverManager.getConnection(url,username,password);
-  	//a statement to execute a query
-  	Statement st=con.createStatement();
-  	//execution of query and storing the response in resultset rs
-  	ResultSet rs=st.executeQuery("select * from phone");
-  	//checking for reponse
-  	System.out.println("phoneId\tphoneName\tphonePrice\t");
-  	while(rs.next())
-  	{
-  		String phonedata=rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3);
-  		
-  		System.out.println(phonedata);
-  	}
-
-  	    con.close();
-  	
-  	
-  	
-  	
+    Connection con=DriverManager.getConnection(url,username,password);
+    // a statement to excute a query 
+    Statement st=con.createStatement();
+    ResultSet rs=st.executeQuery("select * from phone");
+    System.out.println("phoneId\tphoneName\tphonePrice\n");
+    while(rs.next())
+    {
+    	String phonedata=rs.getInt(1)+"\t"+rs.getString(2)+"\t"+rs.getInt(3);
+    	
+    	System.out.println(phonedata);
   }
+        con.close();
+  }
+     
 }
