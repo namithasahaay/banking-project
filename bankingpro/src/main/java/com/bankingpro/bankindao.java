@@ -28,5 +28,58 @@ public class bankindao {
 		int res=pst.executeUpdate();
 		return res;
 	}
+	
+	public int login(String uname,int pin) throws Exception {
+		// getting data from database;
+		String query="select * from customer where cusName= '"+uname+"'";
+		Statement st=con.createStatement();
+		ResultSet rs=st.executeQuery(query);
+		
+		if(rs.next()) {
+			int password=rs.getInt(3);
+			
+			if(password==pin) {
+				return rs.getInt(1);
+			}
+			else {
+				//error password
+				return 0;
+			}
+		}
+		else {
+			//unable to fetch user details
+			return -1;
+		}
+	}
+	
+	public int deposit(int amount,int customerId)throws Exception {
+		//fetching user details based on customer id
+		
+		String query2="select * from customer where cusId="+customerId;
+		
+		Statement st=con.createStatement();
+		
+		ResultSet rs=st.executeQuery(query2);
+		rs.next();
+		
+		//extracting acc balance
+		int bal=rs.getInt(4);
+		 
+		//updating amount
+		amount+=bal;
+		
+		//storing the updated amount
+		String query="update customer set cusamount ="+amount+" where cusId="+customerId;
+		
+		PreparedStatement pst=con.prepareStatement(query);
+		
+		pst.executeUpdate();
+		//returning updated amount
+		
+		          return amount;
+	}
+	
+	
 }
+    
 
