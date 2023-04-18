@@ -87,15 +87,71 @@ public class bankingpro {
 		    		System.out.println("Depsoit successful\n Available amount is :"+bal);
 		    }
 		    	
+		    	
+		    	case 2->{
+		    		
+		    		    System.out.println("Enter amount to withdraw");
+		    		    int amount=sc.nextInt();
+		    		    System.out.println("Confirm your pin");
+		    		    int confmpin=sc.nextInt();
+		    		    int availamount=dao.withdraw(amount,confmpin,res);
+		    		    if(availamount==-1) {
+		    		    	System.out.println("low balanace");
+		    		    }
+		    		    else if(availamount==0) {
+		    		    	System.out.println("Incorrect password");
+		    		    }
+		    		    else {
+		    		    	System.out.println("withdraw successful \n Available amount is :"+availamount);
+		    		    }
+		    		
+		    	}
+		    	case 3->{
+		    		System.out.println("Enter current password");  
+					int currentpwd=sc.nextInt();
+					System.out.println("Enter new password");
+					int newpwd=sc.nextInt();
+					
+					int status=dao.changepin(currentpwd,newpwd,res);
+					if(status==1) {
+						System.out.println("Password changed...");
+					}
+					else {
+						System.out.println("Something went wrong");
+					}
+					
+					
+		    	}
+		    	
+		    	
+		    	
+		    	case 4->{
+		    	
+		    		
+		    	
+		    		System.out.println("Enter pin to delete");
+		    		int pass=sc.nextInt();
+		    		int status=dao.deleteAccount(pin,res);
+		    		if(status==1) {
+		    			System.out.println("Your account is deleted\n Good Bye!....");
+		    		}
+		    		else {
+		    			System.out.println("something went wrong");
+		    		}
+		    		
+		    	}
+		    	
 		    }
 		}
 		
 	}
+	 
 	
   }
            sc.close();
 
     
      }
+
      
 }

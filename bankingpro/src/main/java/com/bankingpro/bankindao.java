@@ -79,7 +79,83 @@ public class bankindao {
 		          return amount;
 	}
 	
+	public int withdraw(int amount ,int pin,int cusId) throws Exception
+	{
+		
+		String query2="select * from customer where cusId="+cusId;
+		
+		Statement st=con.createStatement();
+		
+		ResultSet rs=st.executeQuery(query2);
+		rs.next();
+		
+		int availamount=rs.getInt(4);
+		if(pin==rs.getInt(3))
+		{
+			if(amount<availamount) {
+				availamount-=amount;
+				String query="update customer set cusamount="+availamount+"where cusId="+cusId;
+				
+				
+				PreparedStatement pst=con.prepareStatement(query);
+				pst.executeUpdate();
+				return availamount;
+				
+			}
+			else{
+				return -1;
+			}
+				 
+		}
+		else {
+			return 0;
+		}
+	}	
 	
-}
-    
+	public int changepin(int currentPin,int newPin,int cusId) throws Exception{
+	
+	String query2="select * from customer where cusId="+cusId;
+	
+	Statement st=con.createStatement();
+	
+	ResultSet rs=st.executeQuery(query2);
+	rs.next();
+	
+	if(currentPin==rs.getInt(3)) {
+		String query="update customer set cusPin="+newPin+" where cusId="+cusId;
+		
+		
+		PreparedStatement pst=con.prepareStatement(query);
+		pst.executeUpdate();
+		return 1;
+	}
+	else {
+		return 0;
+	}
+} 
 
+
+
+    public int deleteAccount(int pin,int cusId)throws Exception{
+    	String query2="seleect * from customer where cusId="+cusId;
+    
+    
+        Statement st=con.createStatement();
+        
+        ResultSet rs=st.executeQuery(query2);
+        rs.next();
+        
+    if(pin==rs.getInt(3))
+    {
+    	String query="delct from customer where cusId="+cusId;
+    	
+    	PreparedStatement pst=con.prepareStatement(query);
+    	pst.executeUpdate();
+    	return 1;
+    }
+    else {
+    	return 0;
+    }
+ }
+}
+  
